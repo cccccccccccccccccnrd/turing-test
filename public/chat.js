@@ -54,7 +54,7 @@ socket.addEventListener('message', (event) => {
     overlay.style.display = 'none'
   } else if (msg.type === 'exit') {
     chat.style.display = 'none'
-    info.innerText = 'Person left the conversation.'
+    info.innerHTML = `Person left the conversation.<br>This is your survey code: <mark>${ usernameId }</mark>`
     overlay.style.display = 'flex'
   }
 })
