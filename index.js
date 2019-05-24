@@ -36,7 +36,6 @@ function clear() {
 function log(who, message) {
   clear()
   process.stdout.write(`${who} ${ message }\n`)
-  rl.prompt()
 }
 
 rl.on('line', (line) => {
