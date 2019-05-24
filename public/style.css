@@ -41,6 +41,10 @@ p {
   display: flex;
 }
 
+#app {
+  width: 100%;
+}
+
 #chat {
   width: 100%;
 }
