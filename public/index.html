@@ -23,8 +23,8 @@
           </section>
         </section>
       </section>
-      <textarea v-model="message" v-on:keydown.enter.prevent="send" placeholder="Write a message..." id="textarea-message"></textarea>
-      <button @click="send" id="button-send">Send</button>
+      <textarea v-model="message" v-on:keydown.enter.prevent="if (message.trim()) send()" placeholder="Write a message..." id="textarea-message"></textarea>
+      <button @click="if (message.trim()) send()" id="button-send">Send</button>
     </section>
   </section>
   

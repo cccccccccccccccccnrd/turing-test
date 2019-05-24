@@ -36,8 +36,17 @@ const app = new Vue({
       this.message = ''
     },
     insert: function (username, message, timestamp) {
-      this.bubbles.push({ username, message, timestamp })
-      this.$refs.bubbles.scrollTop = bubbles.scrollHeight
+      const bubble = {
+        username,
+        message,
+        timestamp
+      }
+
+      this.bubbles.push(bubble)
+
+      this.$nextTick(function () {
+        this.$refs.bubbles.scrollTop = this.$refs.bubbles.scrollHeight
+      })
     },
     self: function (username) {
       return username === this.username
