@@ -28,14 +28,12 @@ let db = {
   store: {}
 }
 
-function clear() {
+function log(who, message) {
   readline.clearLine(process.stdout, 0)
   readline.cursorTo(process.stdout, 0)
-}
 
-function log(who, message) {
-  clear()
   process.stdout.write(`${who} ${ message }\n`)
+  rl.prompt(true)
 }
 
 rl.on('line', (line) => {
