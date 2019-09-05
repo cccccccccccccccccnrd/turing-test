@@ -2,13 +2,14 @@ const app = new Vue({
   el: '#app',
   data: {
     socket: null,
+    session: null,
     username: Math.random().toString(16).slice(2),
     message: '',
     info: 'There are no more of these HITs available.',
     bubbles: []
   },
   created: function () {
-    const WS_URL = window.location.hostname === 'localhost' ? 'ws://localhost:5001' : 'wss://translation-of-computation.com/ws'
+    const WS_URL = window.location.hostname === 'localhost' ? 'ws://localhost:5001' : 'ws://192.168.178.71:5001'
     this.socket = new WebSocket(WS_URL)
 
     this.socket.addEventListener('message', (event) => {
@@ -18,8 +19,9 @@ const app = new Vue({
         this.insert(msg.username, msg.message, msg.timestamp)
       } else if (msg.type === 'hello') {
         this.info = null
+        this.session = msg.session
       } else if (msg.type === 'exit') {
-        this.info = `Person left the conversation.<br>This is your survey code: <mark>${ this.username }</mark>`
+        this.info = `Person left the conversation.<br>This is your survey code: <mark>${ this.username },${ this.session }</mark>`
       }
     })
   },
