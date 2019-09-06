@@ -11,7 +11,7 @@ const sensor = new Gpio(3, 'in', 'rising')
 let debounce, pulses = 0
 
 sensor.watch((err, value) => {
-  if (err) console.log(err)
+  if (err) return
   if (!state.looking && value) {
     if (debounce) {
       clearTimeout(debounce)
@@ -19,7 +19,6 @@ sensor.watch((err, value) => {
     pulses++
     debounce = setTimeout(() => {
       if (pulses === 5) start(1)
-      if (pulses === 10) start(2)
       pulses = 0
     }, 200)
   }
@@ -87,7 +86,7 @@ function restart() {
   process.stdout.write('\x1Bc')
 
   setTimeout(() => {
-    process.stdout.write('Insert a 1€ or 2€ coin to start the conversation.\n')
+    process.stdout.write('Insert a 1€ coin to start a conversation.\n')
   }, 50)
 }
 
@@ -110,7 +109,7 @@ function load () {
   fs.readFile(db.file, 'utf8', (err, data) => {
     if (err) {
       fs.writeFile(db.file, '{}', (err) => {
-        if (err) console.log(err)
+        if (err) return
       })
     }
 
@@ -127,7 +126,7 @@ function store (entry, session = state.session) {
 
   db.store[session].push(entry)
   fs.writeFile(db.file, JSON.stringify(db.store, null, 2), 'utf8', (err, data) => {
-    if (err) console.log(err)
+    if (err) return
   })
 }
 
@@ -144,7 +143,7 @@ function create (reward) {
   }
 
   mturk.createHIT(params, (err, data) => {
-    if (err) console.log(err)
+    if (err) return
     state.tasks.push(data.HIT)
     store(data.HIT)
   })
@@ -152,24 +151,27 @@ function create (reward) {
 
 function approve () {
   mturk.listHITs({}, (err, data) => {
-    if (err) console.log(err)
+    if (err) return
 
     data.HITs.forEach((hit) => {
       mturk.listAssignmentsForHIT({ HITId: hit.HITId }, (err, data) => {
-        if (err) console.log(err)
+        if (err) return
   
         data.Assignments.forEach((assignment) => {
           if (assignment.AssignmentStatus !== 'Submitted') return
 
           [username, session] = assignment.Answer.match(/(?<=<FreeText>).*?(?=<\/FreeText>)/gs)[0].split(',')
           
+          if (!db.store[session]) return
           if (db.store[session][db.store[session].length - 1].AssignmentId) return
           store(assignment, session)
-  
+
           if (db.store[session].length > 5) {
             mturk.approveAssignment({
               AssignmentId: assignment.AssignmentId,
               RequesterFeedback: 'Thank you very much for ur time :-)'
+            }, (err, data) => {
+              if (err) return
             })
           }
         })
@@ -219,6 +221,8 @@ wss.on('connection', (ws) => {
     if (msg.type === 'chat-message') {
       ws.send(data)
       log('Computer', msg.message)
+    } else if (msg.type === 'exit') {
+      exit()
     }
   })
 
@@ -236,3 +240,7 @@ process.on('SIGINT', () => {
 
 load()
 restart()
+
+setInterval(() => {
+  approve()
+}, (1000 * 60) * 1)

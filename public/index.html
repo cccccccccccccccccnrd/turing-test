@@ -23,8 +23,12 @@
           </section>
         </section>
       </section>
-      <textarea v-model="message" v-on:keydown.enter.prevent="if (message.trim()) send()" placeholder="Write a message..." id="textarea-message"></textarea>
+      <textarea v-model="message" v-on:keydown.enter.prevent="if (message.trim()) send()" placeholder="Write a message..." id="textarea-message" rows="3"></textarea>
       <button @click="if (message.trim()) send()" id="button-send">Send</button>
+    </section>
+    <section id="ui">
+      <button v-if="!info" @click="end()">End conversation</button>
+      <button v-if="!info.startsWith('There')" @click="save()">Save conversation</button>
     </section>
   </section>
   
