@@ -9,7 +9,7 @@ const app = new Vue({
     bubbles: []
   },
   created: function () {
-    const WS_URL = window.location.hostname === 'localhost' ? 'ws://localhost:5001' : 'ws://192.168.178.71:5001'
+    const WS_URL = window.location.hostname === 'localhost' ? 'ws://localhost:5001' : 'wss://cnrd.computer/turing-test-ws/'
     this.socket = new WebSocket(WS_URL)
 
     this.socket.addEventListener('message', (event) => {
