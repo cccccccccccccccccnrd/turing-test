@@ -63,8 +63,8 @@ function log (who, message) {
   rl.prompt(true)
 }
 
-function exit () {
-  if (state.ws) {
+function exit (send = true) {
+  if (send && state.ws) {
     state.ws.send(JSON.stringify({ type: 'exit' }))
   }
 
@@ -86,7 +86,7 @@ function restart() {
   process.stdout.write('\x1Bc')
 
   setTimeout(() => {
-    process.stdout.write('Insert a 1€ coin to start a conversation.\n')
+    process.stdout.write('Insert a 1€ coin to start the conversation.\n')
   }, 50)
 }
 
@@ -135,7 +135,7 @@ function create (reward) {
     Title: 'Conversation (text chat) with a person currently visiting an art exhibition',
     Description: 'You will chat with a person that will currently be at an art exhibition. The chat doesn\'t have to be about anything specific, just feel free to talk.',
     LifetimeInSeconds: 60 * 20,
-    AssignmentDurationInSeconds: 60 * 20,
+    AssignmentDurationInSeconds: 60 * 30,
     AutoApprovalDelayInSeconds: 60 * 60 * 5,
     MaxAssignments: 1,
     Reward: reward.toString(),
@@ -181,7 +181,7 @@ function approve () {
 }
 
 rl.on('line', (line) => {
-  if (line.trim() === '/exit') {
+  if (line.trim() === '/exit*') {
     return exit()
   } else if (line.trim() === '/start') {
     return /* start() */
@@ -222,7 +222,7 @@ wss.on('connection', (ws) => {
       ws.send(data)
       log('Computer', msg.message)
     } else if (msg.type === 'exit') {
-      exit()
+      exit(false)
     }
   })
 

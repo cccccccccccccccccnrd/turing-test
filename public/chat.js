@@ -58,7 +58,6 @@ const app = new Vue({
       return `${ date.getDate() }.${ date.getMonth() + 1}.${ date.getFullYear() } ${ ('0' + date.getHours()).slice(-2) }:${ ('0' + date.getMinutes()).slice(-2) }`
     },
     save: function () {
-      console.log(this.bubbles)
       const chat = this.bubbles.map((bubble) => {
         const username = bubble.username.startsWith('human') ? 'Them' : 'You'
         const message = bubble.message
