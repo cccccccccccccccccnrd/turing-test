@@ -4,7 +4,7 @@
   "description": "This is a standard Turing test",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js serve-only"
   },
   "author": "",
   "license": "ISC",
