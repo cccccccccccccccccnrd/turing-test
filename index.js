@@ -181,7 +181,7 @@ function approve () {
 }
 
 rl.on('line', (line) => {
-  process.stdout.clearLine()
+  readline.clearLine(process.stdout, 0)
 
   if (line.trim() === '/exit') {
     return exit()
