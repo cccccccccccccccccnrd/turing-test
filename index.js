@@ -181,12 +181,10 @@ function approve () {
 }
 
 rl.on('line', (line) => {
-  if (line.trim() === '/exit*') {
+  if (line.trim() === '/exit') {
     return exit()
-  } else if (line.trim() === '/start') {
-    return /* start() */
-  } else if (line.trim() === '/a') {
-    approve()
+  } else if (line.trim() === '/cu') {
+    return process.exit(0)
   }
 
   const msg = {
@@ -232,10 +230,6 @@ wss.on('connection', (ws) => {
       connect()
     }
   })
-})
-
-process.on('SIGINT', () => {
-  return process.exit(0)
 })
 
 load()
