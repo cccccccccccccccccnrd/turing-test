@@ -7,6 +7,13 @@ const readline = require('readline')
 const AWS = require('aws-sdk')
 const Gpio = require('onoff').Gpio
 
+const app = express()
+
+app.use(express.static(path.join(__dirname, 'public')))
+app.listen(5000)
+
+if (process.argv[2] === 'serve-only') return
+
 const sensor = new Gpio(3, 'in', 'rising')
 let debounce, pulses = 0
 
@@ -50,10 +57,6 @@ const state = {
 
 const mturk = new AWS.MTurk({ endpoint: 'https://mturk-requester-sandbox.us-east-1.amazonaws.com' })
 const wss = new WebSocket.Server({ port: 5001 })
-const app = express()
-
-app.use(express.static(path.join(__dirname, 'public')))
-app.listen(5000)
 
 function log (who, message) {
   readline.clearLine(process.stdout, 0)
@@ -237,8 +240,6 @@ wss.on('connection', (ws) => {
     }
   })
 })
-
-if (process.argv[2] === 'serve-only') return
 
 load()
 restart()
