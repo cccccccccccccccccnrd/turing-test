@@ -75,7 +75,7 @@ p {
 
 #chat {
   width: 100%;
-  max-width: 60vw;
+  max-width: 40vw;
   box-shadow: 0 0 7em rgba(0, 0, 255, 1);
   border-radius: 15px;
   overflow: overlay;

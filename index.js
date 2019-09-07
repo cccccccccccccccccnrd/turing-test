@@ -181,8 +181,11 @@ function approve () {
 }
 
 rl.on('line', (line) => {
-  readline.cursorTo(process.stdout, 0)
-  readline.clearScreenDown(process.stdout)
+  if (!state.ws) {
+    readline.cursorTo(process.stdout, 0, 1)
+    readline.clearScreenDown(process.stdout)
+    return
+  }
 
   if (line.trim() === '/exit') {
     return exit()
