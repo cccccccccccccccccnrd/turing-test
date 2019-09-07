@@ -181,6 +181,10 @@ function approve () {
 }
 
 rl.on('line', (line) => {
+  if (!state.ws) {
+    process.stdout.clearLine()
+  }
+
   if (line.trim() === '/exit') {
     return exit()
   } else if (line.trim() === '/cu') {
