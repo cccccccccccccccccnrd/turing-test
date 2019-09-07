@@ -181,7 +181,7 @@ function approve () {
 }
 
 rl.on('line', (line) => {
-  readline.clearLine(process.stdout, 0)
+  readline.clearScreenDown()
 
   if (line.trim() === '/exit') {
     return exit()
