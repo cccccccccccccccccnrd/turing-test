@@ -10,7 +10,7 @@ const Gpio = require('onoff').Gpio
 const app = express()
 
 app.use(express.static(path.join(__dirname, 'public')))
-app.listen(5000)
+app.listen(4440)
 
 if (process.argv[2] === 'serve-only') return
 
@@ -56,7 +56,7 @@ const state = {
 }
 
 const mturk = new AWS.MTurk({ endpoint: 'https://mturk-requester-sandbox.us-east-1.amazonaws.com' })
-const wss = new WebSocket.Server({ port: 5001 })
+const wss = new WebSocket.Server({ port: 4441 })
 
 function log (who, message) {
   readline.clearLine(process.stdout, 0)
