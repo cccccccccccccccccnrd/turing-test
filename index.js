@@ -238,6 +238,8 @@ wss.on('connection', (ws) => {
   })
 })
 
+if (process.argv[2] === 'serve-only') return
+
 load()
 restart()
 
