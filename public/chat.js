@@ -5,8 +5,7 @@ const app = new Vue({
     session: null,
     username: Math.random().toString(16).slice(2),
     message: '',
-    /* info: 'There are no more of these HITs available.', */
-    info: '',
+    info: 'There are no more of these HITs available.',
     bubbles: []
   },
   created: function () {
