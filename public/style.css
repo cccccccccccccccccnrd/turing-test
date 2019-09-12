@@ -106,6 +106,15 @@ p {
   background: blue;
 }
 
+#ui button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#ui button.disabled:hover {
+  background: black;
+}
+
 .bubble-container {
   display: flex;
   align-items: flex-end;

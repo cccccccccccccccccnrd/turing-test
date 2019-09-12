@@ -5,11 +5,12 @@ const app = new Vue({
     session: null,
     username: Math.random().toString(16).slice(2),
     message: '',
-    info: 'There are no more of these HITs available.',
+    /* info: 'There are no more of these HITs available.', */
+    info: '',
     bubbles: []
   },
   created: function () {
-    const WS_URL = window.location.hostname === 'localhost' ? 'ws://localhost:5001' : 'wss://cnrd.computer/turing-test-ws/'
+    const WS_URL = window.location.hostname === 'localhost' ? 'ws://localhost:4441' : 'wss://cnrd.computer/turing-test-ws/'
     this.socket = new WebSocket(WS_URL)
 
     this.socket.addEventListener('message', (event) => {
