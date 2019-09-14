@@ -1,18 +1,9 @@
 require('dotenv').config()
 const fs = require('fs')
-const path = require('path')
-const express = require('express')
 const WebSocket = require('ws')
 const readline = require('readline')
 const AWS = require('aws-sdk')
 const Gpio = require('onoff').Gpio
-
-const app = express()
-
-app.use(express.static(path.join(__dirname, 'public')))
-app.listen(4440)
-
-if (process.argv[2] === 'serve-only') return
 
 const sensor = new Gpio(3, 'in', 'rising')
 let debounce, pulses = 0
@@ -48,15 +39,16 @@ let db = {
 }
 
 const state = {
-  ws: null,
+  ws: new WebSocket('wss://cnrd.computer/turing-test-ws/'),
   looking: false,
-  username: 'human',
+  connected: false,
   session: null,
   tasks: []
 }
 
+state.ws.send(JSON.stringify({ type: 'human' }))
+
 const mturk = new AWS.MTurk({ endpoint: 'https://mturk-requester-sandbox.us-east-1.amazonaws.com' })
-const wss = new WebSocket.Server({ port: 4441 })
 
 function log (who, message) {
   readline.clearLine(process.stdout, 0)
@@ -67,11 +59,12 @@ function log (who, message) {
 }
 
 function exit (send = true) {
-  if (send && state.ws) {
+  if (send && state.connected) {
     state.ws.send(JSON.stringify({ type: 'exit' }))
   }
 
   state.ws = null
+  state.connected = false
   state.looking = false
 
   restart()
@@ -80,6 +73,9 @@ function exit (send = true) {
 function start (payload) {
   state.looking = true
   state.session = Math.random().toString(16).slice(2)
+
+  state.ws.send(JSON.stringify({ type: 'looking', session: state.session }))
+
   process.stdout.write('\x1Bc')
   connect()
   create(payload)
@@ -98,7 +94,7 @@ function connect () {
   let counter = 0
 
   const interval = setInterval(() => {
-    if (state.ws) {
+    if (!state.looking) {
       return clearInterval(interval)
     }
 
@@ -184,7 +180,7 @@ function approve () {
 }
 
 rl.on('line', (line) => {
-  if (!state.ws) {
+  if (!state.connected) {
     readline.cursorTo(process.stdout, 0, 1)
     readline.clearScreenDown(process.stdout)
     return
@@ -197,13 +193,13 @@ rl.on('line', (line) => {
   }
 
   const msg = {
-    type: 'chat-message',
+    type: 'message',
+    username: 'human',
     message: line.trim(),
-    username: state.username,
     timestamp: Date.now()
   }
 
-  if (state.ws) {
+  if (state.connected) {
     state.ws.send(JSON.stringify(msg))
     store(msg)
   }
@@ -211,34 +207,21 @@ rl.on('line', (line) => {
   rl.prompt()
 })
 
-wss.on('connection', (ws) => {
-  if (state.ws || !state.looking) {
-    return ws.terminate()
+state.ws.on('message', (data) => {
+  const msg = JSON.parse(data)
+  store(msg)
+
+  if (msg.type === 'hello') {
+    if (msg.session === state.session) {
+      state.connected = true
+    }
   }
 
-  state.ws = ws
-
-  ws.send(JSON.stringify({ type: 'hello', session: state.session }))
-  rl.prompt()
-
-  ws.on('message', async (data) => {
-    const msg = JSON.parse(data)
-    store(msg)
-
-    if (msg.type === 'chat-message') {
-      ws.send(data)
-      log('Computer', msg.message)
-    } else if (msg.type === 'exit') {
-      exit(false)
-    }
-  })
-
-  ws.on('close', () => {
-    if (state.looking) {
-      state.ws = null
-      connect()
-    }
-  })
+  if (msg.type === 'message') {
+    log('Computer', msg.message)
+  } else if (msg.type === 'exit') {
+    exit(false)
+  }
 })
 
 load()

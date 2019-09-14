@@ -11,11 +11,12 @@ const app = new Vue({
   created: function () {
     const WS_URL = window.location.hostname === 'localhost' ? 'ws://localhost:4441' : 'wss://cnrd.computer/turing-test-ws/'
     this.socket = new WebSocket(WS_URL)
+    this.socket.send(JSON.stringify({ type: 'computer' }))
 
     this.socket.addEventListener('message', (event) => {
       const msg = JSON.parse(event.data)
     
-      if (msg.type === 'chat-message') {
+      if (msg.type === 'message') {
         this.insert(msg.username, msg.message, msg.timestamp)
       } else if (msg.type === 'hello') {
         this.info = ''
@@ -28,7 +29,7 @@ const app = new Vue({
   methods: {
     send: function () {
       const msg = {
-        type: 'chat-message',
+        type: 'message',
         message: this.message.trim(),
         username: this.username,
         timestamp: Date.now()
