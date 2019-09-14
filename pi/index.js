@@ -96,7 +96,7 @@ function connect () {
 
   const interval = setInterval(() => {
     if (state.connected) {
-      process.stdout.clearLine()
+      process.stdout.write('\x1Bc')
       return clearInterval(interval)
     }
 
