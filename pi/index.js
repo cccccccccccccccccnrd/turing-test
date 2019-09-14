@@ -189,7 +189,10 @@ rl.on('line', (line) => {
     return
   }
 
-  if (line.trim() === '') return rl.prompt()
+  if (line.trim() === '') {
+    process.stdout.clearLine()
+    return
+  }
 
   if (line.trim() === '/exit') {
     return exit()
