@@ -15,7 +15,6 @@ const sensor = new Gpio(3, 'in', 'rising')
 
 const state = {
   ws: new WebSocket('wss://cnrd.computer/turing-test-ws/'),
-  looking: false,
   connected: false,
   session: null,
   tasks: []
@@ -71,15 +70,12 @@ function exit (send = true) {
 
   state.ws = null
   state.connected = false
-  state.looking = false
 
   restart()
 }
 
 function start (payload) {
-  state.looking = true
   state.session = Math.random().toString(16).slice(2)
-
   state.ws.send(JSON.stringify({ type: 'looking', session: state.session }))
 
   process.stdout.write('\x1Bc')
