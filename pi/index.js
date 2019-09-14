@@ -38,7 +38,7 @@ let debounce, pulses = 0
 
 sensor.watch((err, value) => {
   if (err) return
-  if (!state.looking && value) {
+  if (!state.connected && value) {
     if (debounce) {
       clearTimeout(debounce)
     }
@@ -100,7 +100,7 @@ function connect () {
   let counter = 0
 
   const interval = setInterval(() => {
-    if (!state.looking) {
+    if (state.connected) {
       return clearInterval(interval)
     }
 
