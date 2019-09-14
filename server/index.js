@@ -19,6 +19,7 @@ const wss = new WebSocket.Server({ port: 4441 })
 console.log(`Turing Test server running on port 4440 (4441)`)
 
 wss.on('connection', (ws) => {
+  console.log('connected', ws)
   ws.on('message', (data) => {
     const msg = JSON.parse(data)
     
