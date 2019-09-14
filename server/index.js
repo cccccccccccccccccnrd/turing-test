@@ -42,6 +42,7 @@ wss.on('connection', (ws) => {
     }
 
     if (msg.type === 'looking') {
+      console.log('looking')
       state.looking = true
       state.session = msg.session
     }
