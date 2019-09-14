@@ -191,6 +191,7 @@ rl.on('line', (line) => {
 
   if (line.trim() === '') {
     process.stdout.clearLine()
+    readline.moveCursor(process.stdout, 0, -1)
     return
   }
 
