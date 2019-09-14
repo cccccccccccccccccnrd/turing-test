@@ -68,6 +68,10 @@ wss.on('connection', (ws) => {
   ws.on('close', () => {
     if (ws === state.computer) {
       console.log('computer ws disconnect')
+      state.computer = null
+    } else (ws === state.human) {
+      console.log('human ws disconnect')
+      state.human = null
     }
   })
 })
