@@ -63,6 +63,7 @@ wss.on('connection', (ws) => {
       if (msg.username === 'human') {
         state.computer.send(JSON.stringify({ type: 'exit' }))
         state.computer = null
+        state.session = null
       } else {
         state.human.send(JSON.stringify({ type: 'exit' }))
       }
@@ -73,8 +74,9 @@ wss.on('connection', (ws) => {
     if (ws === state.computer) {
       console.log('computer ws disconnect')
       state.computer = null
-      state.session = null
-      state.human.send(JSON.stringify({ type: 'exit' }))
+      if (!state.looking) {
+        state.human.send(JSON.stringify({ type: 'exit' }))
+      }
     } else if (ws === state.human) {
       console.log('human ws disconnect')
       state.human = null
