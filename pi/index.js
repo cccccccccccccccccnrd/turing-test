@@ -96,6 +96,7 @@ function connect () {
 
   const interval = setInterval(() => {
     if (state.connected) {
+      process.stdout.clearLine()
       return clearInterval(interval)
     }
 
