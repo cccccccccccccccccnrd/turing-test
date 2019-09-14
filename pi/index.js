@@ -97,6 +97,7 @@ function connect () {
   const interval = setInterval(() => {
     if (state.connected) {
       process.stdout.write('\x1Bc')
+      rl.prompt(true)
       return clearInterval(interval)
     }
 
