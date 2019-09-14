@@ -35,7 +35,7 @@
     </section>
     <section id="ui">
       <button v-if="!info" @click="end()">End conversation</button>
-      <button v-if="!info || !info.includes('There')" @click="save()" :class="{ disabled: bubbles.length === 0 }">Save conversation</button>
+      <button v-if="!info || !info.includes('There') || !info.includes('confirm')" @click="save()" :class="{ disabled: bubbles.length === 0 }">Save conversation</button>
     </section>
   </section>
   
