@@ -31,7 +31,7 @@ state.ws.on('open', () => {
 })
 
 state.ws.on('error', (err) => {
-  console.log(err)
+  return
 })
 
 let debounce, pulses = 0
