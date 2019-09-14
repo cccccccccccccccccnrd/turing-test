@@ -87,6 +87,7 @@ const app = new Vue({
       }
     },
     confirm: function () {
+      this.info = ''
       this.socket.send(JSON.stringify({ type: 'confirm' }))
     },
     leave: function () {
