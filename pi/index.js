@@ -188,8 +188,8 @@ rl.on('line', (line) => {
     readline.clearScreenDown(process.stdout)
     return
   }
-  
-  if (line.trim() === '') return
+
+  if (line.trim() === '') return rl.prompt()
 
   if (line.trim() === '/exit') {
     return exit()
