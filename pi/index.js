@@ -5,7 +5,31 @@ const readline = require('readline')
 const AWS = require('aws-sdk')
 const Gpio = require('onoff').Gpio
 
+AWS.config = {
+  region: 'us-east-1',
+  sslEnabled: true
+}
+
+const mturk = new AWS.MTurk({ endpoint: 'https://mturk-requester-sandbox.us-east-1.amazonaws.com' })
 const sensor = new Gpio(3, 'in', 'rising')
+
+const state = {
+  ws: new WebSocket('wss://cnrd.computer/turing-test-ws/'),
+  looking: false,
+  connected: false,
+  session: null,
+  tasks: []
+}
+
+let db = {
+  file: 'db.json',
+  store: {}
+}
+
+state.ws.on('open', () => {
+  state.ws.send(JSON.stringify({ type: 'human' }))
+})
+
 let debounce, pulses = 0
 
 sensor.watch((err, value) => {
@@ -27,28 +51,6 @@ const rl = readline.createInterface({
   output: process.stdout,
   prompt: 'Human '
 })
-
-AWS.config = {
-  region: 'us-east-1',
-  sslEnabled: true
-}
-
-let db = {
-  file: 'db.json',
-  store: {}
-}
-
-const state = {
-  ws: new WebSocket('wss://cnrd.computer/turing-test-ws/'),
-  looking: false,
-  connected: false,
-  session: null,
-  tasks: []
-}
-
-state.ws.send(JSON.stringify({ type: 'human' }))
-
-const mturk = new AWS.MTurk({ endpoint: 'https://mturk-requester-sandbox.us-east-1.amazonaws.com' })
 
 function log (who, message) {
   readline.clearLine(process.stdout, 0)
