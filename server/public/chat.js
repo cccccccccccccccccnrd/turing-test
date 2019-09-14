@@ -37,7 +37,8 @@ const app = new Vue({
         username: this.username,
         timestamp: Date.now()
       }
-    
+      
+      this.insert(this.username, msg.message, msg.timestamp)
       this.socket.send(JSON.stringify(msg))
       this.message = ''
     },
