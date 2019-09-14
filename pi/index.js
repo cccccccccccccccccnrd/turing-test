@@ -143,7 +143,7 @@ function create (reward) {
   }
 
   mturk.createHIT(params, (err, data) => {
-    if (err) return
+    if (err) return console.log(err)
     state.tasks.push(data.HIT)
     store(data.HIT)
   })
@@ -213,7 +213,6 @@ state.ws.on('message', (data) => {
   store(msg)
 
   if (msg.type === 'hello') {
-    console.log(msg)
     if (msg.session === state.session) {
       state.connected = true
     }
