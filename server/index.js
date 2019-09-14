@@ -19,7 +19,6 @@ const wss = new WebSocket.Server({ port: 4441 })
 console.log(`Turing Test server running on port 4440 (4441)`)
 
 wss.on('connection', (ws) => {
-  console.log('connected', ws)
   ws.on('message', (data) => {
     const msg = JSON.parse(data)
     
@@ -27,12 +26,14 @@ wss.on('connection', (ws) => {
       if (state.human) {
         return ws.terminate()
       } else {
+        console.log('human connected')
         return state.human = ws
       }
     } else if (msg.type === 'computer') {
       if (!state.looking) {
         return ws.terminate()
       } else {
+        console.log('computer connected')
         state.computer = ws
         state.computer.send(JSON.stringify({ type: 'hello', session: state.session }))
         state.human.send(JSON.stringify({ type: 'hello', session: state.session }))
