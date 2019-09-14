@@ -68,7 +68,6 @@ function exit (send = true) {
     state.ws.send(JSON.stringify({ type: 'exit' }))
   }
 
-  state.ws = null
   state.connected = false
 
   restart()
