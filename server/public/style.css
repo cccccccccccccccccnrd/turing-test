@@ -91,7 +91,7 @@ p {
   margin: 1em 0 0 0;
 }
 
-#ui button {
+button {
   padding: 0.75em 1em;
   font-size: 0.6em;
   color: white;
@@ -102,16 +102,16 @@ p {
   cursor: pointer;
 }
 
-#ui button:hover {
+button:hover {
   background: blue;
 }
 
-#ui button.disabled {
+button.disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-#ui button.disabled:hover {
+button.disabled:hover {
   background: black;
 }
 
@@ -194,7 +194,7 @@ p {
   background: rgba(0, 0, 255, 1);
 }
 
-#ui button, #button-send:focus {
+button, #button-send:focus {
   outline: 0;
 }
 
@@ -203,6 +203,23 @@ p {
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+#confirm p {
+  max-width: 600px;
+  padding: 2em;
+  box-shadow: 0 0 7em rgba(0, 0, 255, 1);
+  border-radius: 15px;
+}
+
+#confirm button:first-of-type {
+  margin: 0 1em 0 0;
+}
+
+#confirm div {
+  display: flex;
+  justify-content: center;
+  margin: 1em 0 0 0;
 }
 
 @media (max-width: 375px) {

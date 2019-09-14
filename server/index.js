@@ -35,9 +35,7 @@ wss.on('connection', (ws) => {
       } else {
         console.log('computer connected')
         state.computer = ws
-        state.computer.send(JSON.stringify({ type: 'hello', session: state.session }))
-        state.human.send(JSON.stringify({ type: 'hello', session: state.session }))
-        return state.looking = false
+        return state.computer.send(JSON.stringify({ type: 'hello', session: state.session }))
       }
     }
 
@@ -45,6 +43,12 @@ wss.on('connection', (ws) => {
       console.log('looking')
       state.looking = true
       state.session = msg.session
+    }
+
+    if (msg.type === 'confirm') {
+      console.log('computer confirmed')
+      state.human.send(JSON.stringify({ type: 'hello', session: state.session }))
+      return state.looking = false
     }
 
     if (msg.type === 'message') {
@@ -69,6 +73,7 @@ wss.on('connection', (ws) => {
     if (ws === state.computer) {
       console.log('computer ws disconnect')
       state.computer = null
+      state.session = null
       state.human.send(JSON.stringify({ type: 'exit' }))
     } else if (ws === state.human) {
       console.log('human ws disconnect')

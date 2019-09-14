@@ -12,7 +12,14 @@
 <body>
   <section id="app">
     <section id="overlay" v-if="info">
-      <p v-html="info"></p>
+      <p v-if="info !== 'confirm'" v-html="info"></p>
+      <section v-if="info === 'confirm'" id="confirm">
+        <p>Please confirm that you have around 5 minutes time to work on this task. Accept the HIT before continuing.</p>
+        <div>
+          <button @click="confirm()">Confirm</button>
+          <button @click="leave()">No, I dont have time</button>
+        </div>
+      </section>
     </section>
     <section v-if="!info" id="chat">
       <section ref="bubbles" id="bubbles">
@@ -28,7 +35,7 @@
     </section>
     <section id="ui">
       <button v-if="!info" @click="end()">End conversation</button>
-      <button v-if="!info.startsWith('There')" @click="save()" :class="{ disabled: bubbles.length === 0 }">Save conversation</button>
+      <button v-if="!info" @click="save()" :class="{ disabled: bubbles.length === 0 }">Save conversation</button>
     </section>
   </section>
   

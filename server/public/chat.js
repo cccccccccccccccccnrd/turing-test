@@ -6,6 +6,7 @@ const app = new Vue({
     username: Math.random().toString(16).slice(2),
     message: '',
     info: 'There are no more of these HITs available.',
+    /* info: 'confirm', */
     bubbles: []
   },
   created: function () {
@@ -22,7 +23,7 @@ const app = new Vue({
       if (msg.type === 'message') {
         this.insert(msg.username, msg.message, msg.timestamp)
       } else if (msg.type === 'hello') {
-        this.info = ''
+        this.info = 'confirm'
         this.session = msg.session
       } else if (msg.type === 'exit') {
         this.info = `Person left the conversation.<br>This is your survey code: <mark>${ this.username },${ this.session }</mark>`
@@ -84,6 +85,12 @@ const app = new Vue({
       } else {
         return
       }
+    },
+    confirm: function () {
+      this.socket.send(JSON.stringify({ type: 'confirm' }))
+    },
+    leave: function () {
+      console.log('cu')
     }
   }
 })
