@@ -30,6 +30,10 @@ state.ws.on('open', () => {
   state.ws.send(JSON.stringify({ type: 'human' }))
 })
 
+state.ws.on('error', (err) => {
+  console.log(err)
+})
+
 let debounce, pulses = 0
 
 sensor.watch((err, value) => {
