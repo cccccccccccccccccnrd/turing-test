@@ -11,7 +11,10 @@ const app = new Vue({
   created: function () {
     const WS_URL = window.location.hostname === 'localhost' ? 'ws://localhost:4441' : 'wss://cnrd.computer/turing-test-ws/'
     this.socket = new WebSocket(WS_URL)
-    this.socket.send(JSON.stringify({ type: 'computer' }))
+
+    this.socket.addEventListener('open', () => {
+      this.socket.send(JSON.stringify({ type: 'computer' }))
+    })
 
     this.socket.addEventListener('message', (event) => {
       const msg = JSON.parse(event.data)
