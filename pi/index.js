@@ -218,6 +218,7 @@ state.ws.on('message', (data) => {
   store(msg)
 
   if (msg.type === 'hello') {
+    console.log(msg)
     if (msg.session === state.session) {
       state.connected = true
     }
