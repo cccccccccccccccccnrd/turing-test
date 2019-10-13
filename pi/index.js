@@ -1,4 +1,5 @@
 require('dotenv').config()
+const path = require('path')
 const fs = require('fs')
 const WebSocket = require('ws')
 const readline = require('readline')
@@ -108,9 +109,9 @@ function connect () {
 }
 
 function load () {
-  fs.readFile(db.file, 'utf8', (err, data) => {
+  fs.readFile(path.join(__dirname, db.file), 'utf8', (err, data) => {
     if (err) {
-      fs.writeFile(db.file, '{}', (err) => {
+      fs.writeFile(path.join(__dirname, db.file), '{}', (err) => {
         if (err) return
       })
     }
@@ -127,7 +128,7 @@ function store (entry, session = state.session) {
   }
 
   db.store[session].push(entry)
-  fs.writeFile(db.file, JSON.stringify(db.store, null, 2), 'utf8', (err, data) => {
+  fs.writeFile(path.join(__dirname, db.file), JSON.stringify(db.store, null, 2), 'utf8', (err, data) => {
     if (err) return
   })
 }
