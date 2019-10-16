@@ -87,7 +87,7 @@ function restart() {
   process.stdout.write('\x1Bc')
 
   setTimeout(() => {
-    process.stdout.write('Insert a 1€ coin to start the conversation.\n')
+    process.stdout.write('Insert a 1€ coin to have a conversation.\n')
   }, 50)
 }
 
@@ -98,6 +98,7 @@ function connect () {
   const interval = setInterval(() => {
     if (state.connected) {
       process.stdout.write('\x1Bc')
+      log('Computer', 'hi')
       rl.prompt(true)
       return clearInterval(interval)
     }
