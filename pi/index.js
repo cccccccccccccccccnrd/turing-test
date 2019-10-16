@@ -184,6 +184,12 @@ function approve () {
 }
 
 rl.on('line', (line) => {
+  if (line.trim() === '/cu') {
+    return process.exit(0)
+  } else if (line.trim() === '/stanni') {
+    start(1)
+  }
+
   if (!state.connected) {
     readline.cursorTo(process.stdout, 0, 1)
     readline.clearScreenDown(process.stdout)
@@ -199,8 +205,6 @@ rl.on('line', (line) => {
 
   if (line.trim() === '/exit') {
     return exit()
-  } else if (line.trim() === '/cu') {
-    return process.exit(0)
   }
 
   const msg = {
@@ -233,6 +237,10 @@ state.ws.on('message', (data) => {
   } else if (msg.type === 'exit') {
     exit(false)
   }
+})
+
+process.on('SIGINT', () => {
+  return
 })
 
 load()
