@@ -7,19 +7,16 @@ const app = new Vue({
     message: '',
     info: 'There are no more of these HITs available.',
     /* info: 'confirm', */
-    bubbles: []
+    bubbles: [],
+    hi: true
   },
   created: function () {
     const WS_URL = window.location.hostname === 'localhost' ? 'ws://localhost:4441' : 'wss://cnrd.computer/turing-test-ws/'
     this.socket = new WebSocket(WS_URL)
 
-    this.socket.addEventListener('open', () => {
-      this.socket.send(JSON.stringify({ type: 'computer' }))
-    })
-
     this.socket.addEventListener('message', (event) => {
       const msg = JSON.parse(event.data)
-    
+
       if (msg.type === 'message') {
         this.insert(msg.username, msg.message, msg.timestamp)
       } else if (msg.type === 'hello') {
@@ -32,13 +29,18 @@ const app = new Vue({
   },
   methods: {
     send: function () {
+      if (this.hi) {
+        this.socket.send(JSON.stringify({ type: 'computer' }))
+        this.hi = false
+      }
+
       const msg = {
         type: 'message',
         message: this.message.trim(),
         username: this.username,
         timestamp: Date.now()
       }
-      
+
       this.insert(this.username, msg.message, msg.timestamp)
       this.socket.send(JSON.stringify(msg))
       this.message = ''
