@@ -6,7 +6,7 @@ AWS.config = {
   sslEnabled: true
 }
 
-const mturk = new AWS.MTurk({ endpoint: 'https://mturk-requester-sandbox.us-east-1.amazonaws.com' })
+const mturk = new AWS.MTurk({ endpoint: 'https://mturk-requester.us-east-1.amazonaws.com' })
 
 function list () {
   mturk.listHITs({}, (err, data) => {

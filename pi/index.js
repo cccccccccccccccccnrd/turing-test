@@ -45,7 +45,7 @@ sensor.watch((err, value) => {
     }
     pulses++
     debounce = setTimeout(() => {
-      if (pulses === 5) start(1)
+      if (pulses === 10) start(1)
       pulses = 0
     }, 200)
   }
