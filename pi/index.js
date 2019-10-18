@@ -12,7 +12,7 @@ AWS.config = {
 }
 
 /* https://mturk-requester-sandbox.us-east-1.amazonaws.com, https://mturk-requester.us-east-1.amazonaws.com */
-const mturk = new AWS.MTurk({ endpoint: 'https://mturk-requester-sandbox.us-east-1.amazonaws.com' })
+const mturk = new AWS.MTurk({ endpoint: 'https://mturk-requester.us-east-1.amazonaws.com' })
 const sensor = new Gpio(3, 'in', 'rising')
 
 const state = {
@@ -144,7 +144,7 @@ function create (reward) {
     AutoApprovalDelayInSeconds: 60 * 60 * 5,
     MaxAssignments: 1,
     Reward: reward.toString(),
-    HITLayoutId: '3R24I9HZC95ECZKM8WJMEKHRDVLDUG' /* 3R24I9HZC95ECZKM8WJMEKHRDVLDUG, 3HCDIAN2VXOKR3S4ACP1YG9XZYCSVF */
+    HITLayoutId: '3HCDIAN2VXOKR3S4ACP1YG9XZYCSVF' /* 3R24I9HZC95ECZKM8WJMEKHRDVLDUG, 3HCDIAN2VXOKR3S4ACP1YG9XZYCSVF */
   }
 
   mturk.createHIT(params, (err, data) => {
