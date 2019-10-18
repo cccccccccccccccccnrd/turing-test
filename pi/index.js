@@ -12,7 +12,7 @@ AWS.config = {
 }
 
 /* https://mturk-requester-sandbox.us-east-1.amazonaws.com, https://mturk-requester.us-east-1.amazonaws.com */
-const mturk = new AWS.MTurk({ endpoint: 'https://mturk-requester.us-east-1.amazonaws.com' })
+const mturk = new AWS.MTurk({ endpoint: 'https://mturk-requester-sandbox.us-east-1.amazonaws.com' })
 const sensor = new Gpio(3, 'in', 'rising')
 
 const state = {
