@@ -248,6 +248,6 @@ process.on('SIGINT', () => {
 load()
 restart()
 
-setInterval(() => {
+/* setInterval(() => {
   approve()
-}, (1000 * 60) * 1)
+}, (1000 * 60) * 1) */
