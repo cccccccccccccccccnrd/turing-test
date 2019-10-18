@@ -11,7 +11,8 @@ AWS.config = {
   sslEnabled: true
 }
 
-const mturk = new AWS.MTurk({ endpoint: 'https://mturk-requester-sandbox.us-east-1.amazonaws.com' })
+/* https://mturk-requester-sandbox.us-east-1.amazonaws.com, https://mturk-requester.us-east-1.amazonaws.com */
+const mturk = new AWS.MTurk({ endpoint: 'https://mturk-requester.us-east-1.amazonaws.com' })
 const sensor = new Gpio(3, 'in', 'rising')
 
 const state = {
@@ -136,14 +137,14 @@ function store (entry, session = state.session) {
 
 function create (reward) {
   const params = {
-    Title: 'Conversation (text chat) with a person currently visiting an art exhibition',
+    Title: 'Answer simple questions (~5min)',
     Description: 'You will chat with a person that will currently be at an art exhibition. The chat doesn\'t have to be about anything specific, just feel free to talk.',
     LifetimeInSeconds: 60 * 20,
     AssignmentDurationInSeconds: 60 * 30,
     AutoApprovalDelayInSeconds: 60 * 60 * 5,
     MaxAssignments: 1,
     Reward: reward.toString(),
-    HITLayoutId: '3JWG6S58288SOR3FHJY8F86R9Q5OPT'
+    HITLayoutId: '3HCDIAN2VXOKR3S4ACP1YG9XZYCSVF'
   }
 
   mturk.createHIT(params, (err, data) => {
