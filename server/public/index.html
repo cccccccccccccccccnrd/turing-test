@@ -14,7 +14,7 @@
     <section id="overlay" v-if="info">
       <p v-if="info !== 'confirm'" v-html="info"></p>
       <section v-if="info === 'confirm'" id="confirm">
-        <p>Please confirm that you have around 5 minutes time to work on this task. Accept the HIT before continuing.</p>
+        <p>Please confirm that you have around 5 minutes time to work on this task. Accept the HIT on Amazon mturk before continuing.</p>
         <div>
           <button @click="confirm()">Confirm</button>
           <button @click="leave()">No, I dont have time</button>

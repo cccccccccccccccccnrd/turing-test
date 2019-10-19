@@ -1,7 +1,7 @@
 {
   "name": "turing-test-utils",
   "version": "1.0.0",
-  "description": "This is a standard Turing test",
+  "description": "This is a standard Turing test utils",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
@@ -9,6 +9,7 @@
   "author": "cnrd",
   "dependencies": {
     "aws-sdk": "^2.463.0",
-    "dotenv": "^8.0.0"
+    "dotenv": "^8.0.0",
+    "ws": "^7.0.0"
   }
 }

@@ -4,7 +4,6 @@ const fs = require('fs')
 const WebSocket = require('ws')
 const readline = require('readline')
 const AWS = require('aws-sdk')
-const Gpio = require('onoff').Gpio
 
 AWS.config = {
   region: 'us-east-1',
@@ -13,7 +12,6 @@ AWS.config = {
 
 /* https://mturk-requester-sandbox.us-east-1.amazonaws.com, https://mturk-requester.us-east-1.amazonaws.com */
 const mturk = new AWS.MTurk({ endpoint: 'https://mturk-requester.us-east-1.amazonaws.com' })
-const sensor = new Gpio(3, 'in', 'rising')
 
 const state = {
   ws: new WebSocket('wss://cnrd.computer/turing-test-ws/'),
@@ -33,22 +31,6 @@ state.ws.on('open', () => {
 
 state.ws.on('error', (err) => {
   return
-})
-
-let debounce, pulses = 0
-
-sensor.watch((err, value) => {
-  if (err) return console.log(err)
-  if (!state.connected && value) {
-    if (debounce) {
-      clearTimeout(debounce)
-    }
-    pulses++
-    debounce = setTimeout(() => {
-      if (pulses === 10) start(1)
-      pulses = 0
-    }, 200)
-  }
 })
 
 const rl = readline.createInterface({

@@ -13,7 +13,6 @@ const app = new Vue({
   created: function () {
     const WS_URL = window.location.hostname === 'localhost' ? 'ws://localhost:4441' : 'wss://cnrd.computer/turing-test-ws/'
     this.socket = new WebSocket(WS_URL)
-    this.insert('human', 'hi', Date.now())
 
     this.socket.addEventListener('open', () => {
       this.socket.send(JSON.stringify({ type: 'computer' }))
@@ -81,16 +80,13 @@ const app = new Vue({
       a.click()
     },
     end: function () {
-      if (confirm('Are you sure you want to end the conversation? The assignment will only get approved if you wrote more then 10 messages.')) {
-        this.info = `You left the conversation.<br>This is your survey code: <mark>${ this.username },${ this.session }</mark>`
-        this.socket.send(JSON.stringify({ type: 'exit' }))
-      } else {
-        return
-      }
+      this.info = `You left the conversation.<br>This is your survey code: <mark>${ this.username },${ this.session }</mark>`
+      this.socket.send(JSON.stringify({ type: 'exit' }))
     },
     confirm: function () {
       this.info = ''
       this.socket.send(JSON.stringify({ type: 'confirm' }))
+      this.insert('human', 'hi', Date.now())
     },
     leave: function () {
       console.log('cu')

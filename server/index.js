@@ -23,12 +23,8 @@ wss.on('connection', (ws) => {
     const msg = JSON.parse(data)
     
     if (msg.type === 'human') {
-      if (state.human) {
-        return ws.terminate()
-      } else {
-        console.log('human connected')
-        return state.human = ws
-      }
+      console.log('human connected')
+      return state.human = ws
     } else if (msg.type === 'computer') {
       if (!state.looking) {
         return ws.terminate()
