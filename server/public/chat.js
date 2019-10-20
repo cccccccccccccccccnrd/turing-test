@@ -89,7 +89,7 @@ const app = new Vue({
       this.insert('human', 'hi', Date.now())
     },
     leave: function () {
-      window.close()
+      window.location.href = 'https://www.google.com'
     }
   }
 })
