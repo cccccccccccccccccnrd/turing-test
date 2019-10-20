@@ -89,7 +89,7 @@ const app = new Vue({
       this.insert('human', 'hi', Date.now())
     },
     leave: function () {
-      console.log('cu')
+      window.close()
     }
   }
 })
