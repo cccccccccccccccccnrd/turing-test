@@ -11,7 +11,7 @@ AWS.config = {
 }
 
 /* https://mturk-requester-sandbox.us-east-1.amazonaws.com, https://mturk-requester.us-east-1.amazonaws.com */
-const mturk = new AWS.MTurk({ endpoint: 'https://mturk-requester.us-east-1.amazonaws.com' })
+const mturk = new AWS.MTurk({ endpoint: 'https://mturk-requester-sandbox.us-east-1.amazonaws.com' })
 
 const state = {
   ws: new WebSocket('wss://cnrd.computer/turing-test-ws/'),
@@ -126,7 +126,7 @@ function create (reward) {
     AutoApprovalDelayInSeconds: 60 * 60 * 5,
     MaxAssignments: 1,
     Reward: reward.toString(),
-    HITLayoutId: '35C9SNQSQ1CEZVATZ9DAQG9BDC95IU' /* 3R24I9HZC95ECZKM8WJMEKHRDVLDUG, 35C9SNQSQ1CEZVATZ9DAQG9BDC95IU */
+    HITLayoutId: '3R24I9HZC95ECZKM8WJMEKHRDVLDUG' /* 3R24I9HZC95ECZKM8WJMEKHRDVLDUG, 35C9SNQSQ1CEZVATZ9DAQG9BDC95IU */
   }
 
   mturk.createHIT(params, (err, data) => {
