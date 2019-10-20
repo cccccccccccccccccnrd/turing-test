@@ -41,10 +41,15 @@ wss.on('connection', (ws) => {
     }
 
     if (msg.type === 'confirm') {
-      console.log('computer confirmed')
-      state.computer = ws
-      state.human.send(JSON.stringify({ type: 'hello', session: state.session }))
-      return state.looking = false
+      if (state.computer) {
+        ws.send(JSON.stringify({ type: 'reset' }))
+        ws.terminate()
+      } else {
+        console.log('computer confirmed')
+        state.computer = ws
+        state.human.send(JSON.stringify({ type: 'hello', session: state.session }))
+        return state.looking = false
+      }
     }
 
     if (msg.type === 'message') {

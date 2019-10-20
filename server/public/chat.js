@@ -28,6 +28,8 @@ const app = new Vue({
         this.session = msg.session
       } else if (msg.type === 'exit') {
         this.info = `Person left the conversation.<br>This is your survey code: <mark>${ this.username },${ this.session }</mark>`
+      } else if (msg.type === 'reset') {
+        this.info = 'There are no more of these HITs available.'
       }
     })
   },
