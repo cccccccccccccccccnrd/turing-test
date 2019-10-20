@@ -81,7 +81,10 @@ function start (payload) {
 
   process.stdout.write('\x1Bc')
   connect()
-  create(payload)
+
+  new Array(0, 0).map(() => {
+    create(payload)
+  })
 }
 
 function restart() {
@@ -99,7 +102,6 @@ function connect () {
   const interval = setInterval(() => {
     if (state.connected) {
       process.stdout.write('\x1Bc')
-      log('Computer', 'hi')
       rl.prompt(true)
       return clearInterval(interval)
     }

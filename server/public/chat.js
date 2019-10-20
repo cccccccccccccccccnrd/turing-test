@@ -7,8 +7,7 @@ const app = new Vue({
     message: '',
     info: 'There are no more of these HITs available.',
     /* info: 'confirm', */
-    bubbles: [],
-    hi: true
+    bubbles: []
   },
   created: function () {
     const WS_URL = window.location.hostname === 'localhost' ? 'ws://localhost:4441' : 'wss://cnrd.computer/turing-test-ws/'
