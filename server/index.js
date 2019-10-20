@@ -30,8 +30,7 @@ wss.on('connection', (ws) => {
         return ws.terminate()
       } else {
         console.log('computer connected')
-        state.computer = ws
-        return state.computer.send(JSON.stringify({ type: 'hello', session: state.session }))
+        return ws.send(JSON.stringify({ type: 'hello', session: state.session }))
       }
     }
 
