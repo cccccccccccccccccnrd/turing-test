@@ -82,9 +82,11 @@ function start (payload) {
   process.stdout.write('\x1Bc')
   connect()
 
-  new Array(0, 0).map(() => {
+  create(payload)
+
+  /* new Array(0, 0).map(() => {
     create(payload)
-  })
+  }) */
 }
 
 function restart() {
