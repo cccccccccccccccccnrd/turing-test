@@ -1,0 +1,1 @@
+![turing-test.00_01_00_04.Still005](https://i.imgur.com/2sxQYc4.jpg "turing-test.00_01_00_04.Still005")
