@@ -1,10 +1,10 @@
-require('dotenv').config()
 const path = require('path')
 const fs = require('fs')
 const WebSocket = require('ws')
 const readline = require('readline')
 const AWS = require('aws-sdk')
 const Gpio = require('onoff').Gpio
+require('dotenv').config({ path: path.join(__dirname, '.env') })
 
 AWS.config = {
   region: 'us-east-1',
